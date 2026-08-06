@@ -1,0 +1,10 @@
+services:
+  openclaw-node.2026.7:
+    image: alexfariakof/openclaw-2026.7.1:latest
+    container_name: openclaw-2026.7.1
+    build:
+      context: .
+      dockerfile: Dockerfile
+      pull: true
+    pull_policy: if_not_present
+    command: sleep infinity
