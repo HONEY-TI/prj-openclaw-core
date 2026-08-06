@@ -1,0 +1,18 @@
+#docker compose  --profile init up docker-infra --no-start
+include:
+  - path: docker-compose.network.yml
+  - path: docker-compose.volume.yml
+
+services:
+  docker-infra:
+    image: alpine:3.22
+    container_name: docker-infra
+    profiles: ["init"]
+    command: ["true"]
+    volumes:
+      - vscode:/vscode
+      - ollama-data:/ollama-data
+
+    networks:
+      - ollama-network
+      - openclaw-network

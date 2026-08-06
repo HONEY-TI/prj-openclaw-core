@@ -1,0 +1,126 @@
+# ─── Git / Docker meta ─────────────────────────────────────────────────────────
+**/.git
+**/.gitignore
+**/.dockerignore
+**/Dockerfile
+**/docker-compose.yml
+**/docker-compose.override.yml
+
+# ─── Node ──────────────────────────────────────────────────────────────────────
+**/node_modules
+**/package-lock.json
+**/pids
+**/*.pid
+**/*.seed
+**/*.pid.lock
+**/npm-debug.log*
+**/pnpm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+**/lerna-debug.log*
+
+# ─── Compiled Output ────────────────────────────────────────────────────────────
+**/dist
+**/build
+**/out-tsc
+**/bazel-out
+**/tmp
+**/.temp
+**/.tmp
+**/*.tsbuildinfo
+
+# ─── Logs ────────────────────────────────────────────────────────────────────────
+**/logs
+**/*.log
+**/*.jsonl
+
+# ─── Environment / Secrets ──────────────────────────────────────────────────────
+**/.env
+**/.env.*
+!**/.env.example
+**/*.key
+**/*.pem
+**/*.crt
+**/secrets.json
+**/.gateway-token
+
+# ─── Tests & Coverage ────────────────────────────────────────────────────────────
+**/coverage
+**/.nyc_output
+**/__screenshots__
+
+# ─── Angular ─────────────────────────────────────────────────────────────────────
+**/.angular/cache
+
+# ─── IDEs & Editors ───────────────────────────────────────────────────────────────
+**/.idea
+**/.vscode
+**/.project
+**/.classpath
+**/.c9
+**/*.launch
+**/.settings
+**/*.sublime-workspace
+**/.history
+
+# ─── Dev containers / Docker infra (não deve ir pra imagem final) ────────────────
+**/.devcontainer
+**/.docker
+**/.docker-nodejs
+**/.docker-ollama
+**/.docker-redis
+**/.docker-infra
+
+# ─── System Files ──────────────────────────────────────────────────────────────
+**/.DS_Store
+**/Thumbs.db
+
+# ─── Misc ────────────────────────────────────────────────────────────────────────
+**/connect.lock
+**/libpeerconnection.log
+**/typings
+**/testem.log
+**/.sass-cache
+**/report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+**TODO*.md
+**/.claude
+**/.blackboxcli
+**/.fuse*
+
+# ─── Docs (mantém README) ─────────────────────────────────────────────────────────
+**/*.md
+!**/README.md
+
+# ─── OpenClaw runtime/state (nunca vai pra imagem) ────────────────────────────────
+**/.openclaw/state
+**/.openclaw/logs
+**/.openclaw/identity
+**/.openclaw/workspace
+**/.openclaw/openclaw.json.bak*
+**/openclaw copy.json
+**/*.sqlite
+**/*.sqlite-shm
+**/*.sqlite-wal
+
+# ─── OpenClaw data (sessions, devices, memory etc) ────────────────────────────────
+**/openclaw-data/**/*.sqlite
+**/openclaw-data/**/*.sqlite-shm
+**/openclaw-data/**/*.sqlite-wal
+**/openclaw-data/**/sessions/*.jsonl
+**/openclaw-data/**/sessions.json
+**/openclaw-data/**/state
+**/openclaw-data/**/*.trajectory*.jsonl
+**/openclaw-data/**/*.attested
+**/openclaw-data/**/devices
+**/openclaw-data/**/memory
+**/openclaw-data/**/completions
+**/openclaw-data/**/tailscale
+
+# ─── Volumes de dados grandes (o que provavelmente explode o contexto pra GB) ────
+**/npm-cache
+**/vscode-data
+**/vscode
+**/backend-node-modules
+**/frontend-node-modules
+**/ollama-data
+**/redis-data

@@ -1,0 +1,47 @@
+services:
+  openclaw-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: openclaw-dev
+    hostname: openclaw
+    pull_policy: if_not_present
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      NODE_OPTIONS: "--max-old-space-size=4096"
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY}
+    ports:
+      - "18789:18789"
+    volumes:
+      - npm-cache:/home/node/.npm
+      - .openclaw:/root/.openclaw:cached
+      - ./entrypoint.sh:/usr/local/bin/docker-entrypoint.sh:ro
+      - ./tailscaled.sh:/usr/local/bin/docker-tailscaled.sh:ro
+    #command: /usr/local/bin/tailscaled.sh
+    entrypoint: /usr/local/bin/docker-entrypoint.sh
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+      - SYS_ADMIN
+    networks:
+      - ollama-network
+      - openclaw-network
+
+volumes:
+  ollama-data:
+    name: ollama-data
+    external: true
+  npm-cache:
+    name: npm-cache
+    external: true
+
+networks:
+  openclaw-network:
+    name: openclaw-network
+    external: true
+  ollama-network:
+    name: ollama-network
+    external: true

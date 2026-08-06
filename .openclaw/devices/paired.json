@@ -1,0 +1,102 @@
+{
+  "f40845d6e384247f89114a9ad1a98968b4e3e896bdc026d1b6d56cd813c3c3be": {
+    "deviceId": "f40845d6e384247f89114a9ad1a98968b4e3e896bdc026d1b6d56cd813c3c3be",
+    "publicKey": "7Ca5a63V2i1tvuHNtw359v6f3Ap9e-XhzAgu9qCFCfA",
+    "platform": "Linux x86_64",
+    "clientId": "openclaw-control-ui",
+    "clientMode": "webchat",
+    "role": "operator",
+    "roles": [
+      "operator"
+    ],
+    "scopes": [
+      "operator.admin",
+      "operator.read",
+      "operator.write",
+      "operator.approvals",
+      "operator.pairing"
+    ],
+    "approvedScopes": [
+      "operator.admin",
+      "operator.read",
+      "operator.write",
+      "operator.approvals",
+      "operator.pairing"
+    ],
+    "remoteIp": "172.20.0.1",
+    "tokens": {
+      "operator": {
+        "token": "ebMzRD3dpfZarf6q6n7dRV1kAXxam0coFC38JbIWctM",
+        "role": "operator",
+        "scopes": [
+          "operator.admin",
+          "operator.approvals",
+          "operator.pairing",
+          "operator.read",
+          "operator.write"
+        ],
+        "issuer": {
+          "kind": "shared-gateway-auth",
+          "generation": "BBJvBQZQ2XpeuwUv3fmwhhPRyDp1OfqwuSgGq4ME25E"
+        },
+        "createdAtMs": 1785977912413,
+        "rotatedAtMs": 1785977912422,
+        "lastUsedAtMs": 1785984880330
+      }
+    },
+    "createdAtMs": 1785977912413,
+    "approvedAtMs": 1785977912413,
+    "lastSeenAtMs": 1785984880330,
+    "lastSeenReason": "device-token-auth"
+  },
+  "ff65c8fbeea4a1875f500bb743b5b7c95040a4c20be0ab1435849828c9e2a906": {
+    "deviceId": "ff65c8fbeea4a1875f500bb743b5b7c95040a4c20be0ab1435849828c9e2a906",
+    "publicKey": "imrFto3uJtkrQGxLH3wK3jgTnBGGnlfy_wScTnefKWE",
+    "platform": "Linux x86_64",
+    "clientId": "openclaw-control-ui",
+    "clientMode": "webchat",
+    "role": "operator",
+    "roles": [
+      "operator"
+    ],
+    "scopes": [
+      "operator.admin",
+      "operator.read",
+      "operator.write",
+      "operator.approvals",
+      "operator.pairing"
+    ],
+    "approvedScopes": [
+      "operator.admin",
+      "operator.read",
+      "operator.write",
+      "operator.approvals",
+      "operator.pairing"
+    ],
+    "remoteIp": "172.20.0.1",
+    "tokens": {
+      "operator": {
+        "token": "fxn7KF_5PJc37_DI0Ykp_9q8rsjov5EV4Q16tMa1zMw",
+        "role": "operator",
+        "scopes": [
+          "operator.admin",
+          "operator.approvals",
+          "operator.pairing",
+          "operator.read",
+          "operator.write"
+        ],
+        "issuer": {
+          "kind": "shared-gateway-auth",
+          "generation": "BBJvBQZQ2XpeuwUv3fmwhhPRyDp1OfqwuSgGq4ME25E"
+        },
+        "createdAtMs": 1785984934637,
+        "rotatedAtMs": 1785984934654,
+        "lastUsedAtMs": 1785988686011
+      }
+    },
+    "createdAtMs": 1785984934637,
+    "approvedAtMs": 1785984934637,
+    "lastSeenAtMs": 1785988686011,
+    "lastSeenReason": "device-token-auth"
+  }
+}

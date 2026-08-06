@@ -1,0 +1,148 @@
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files
+.dockerenv
+
+# ─── Compiled Output ───────────────────────────────────────────────────────────
+/dist
+/build
+/out-tsc
+/bazel-out
+/tmp
+.temp
+.tmp
+**/dist
+**/tmp
+**/out-tsc
+**/bazel-out
+**/*.tsbuildinfo
+.claude/
+.claude
+!.docker-nodejs/
+**/.openclaw/state/*
+**/skills-prompts/*
+# ─── Node ──────────────────────────────────────────────────────────────────────
+/node_modules
+**/node_modules
+pids
+*.pid
+*.seed
+*.pid.lock
+package-lock.json
+
+# ─── Logs ──────────────────────────────────────────────────────────────────────
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# ─── Environment Variables ─────────────────────────────────────────────────────
+.env.ts
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ─── Tests & Coverage ──────────────────────────────────────────────────────────
+/coverage
+**/coverage
+.nyc_output/
+**/.nyc_output/
+__screenshots__/
+
+# ─── Angular ───────────────────────────────────────────────────────────────────
+/.angular/cache
+**.angular
+!**/environments
+
+# ─── IDEs & Editors ────────────────────────────────────────────────────────────
+.idea/
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# ─── VS Code ───────────────────────────────────────────────────────────────────
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/mcp.json
+.history/*
+
+# ─── System Files ──────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ─── Misc ──────────────────────────────────────────────────────────────────────
+/connect.lock
+/libpeerconnection.log
+/typings
+testem.log
+.sass-cache/
+.claude/
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+**TODO*.md
+
+# 🔑 Chaves e segredos e stubs
+*.key
+*.pem
+*.crt
+secrets.json
+
+
+# Exceções
+!.github/
+!**/.github/
+!.github
+!.vscode/
+!**/.vscode/
+!.vscode
+!.devcontainer/
+!**/.devcontainer/
+!.devcontainer
+!.docker/
+!**/.docker/
+!.docker
+!**/.dockerignore
+!.dockerignore
+!**/.docker-infra/
+**/.env.docker
+**/.docker/.docker/
+.blackboxcli/
+!.docker-ollama/
+!.docker-redis/
+.gateway-token
+!.ai
+!.openclaw
+!.backlog
+.openclaw/workspace/
+!**/init-docker
+!**/install-extensions
+**/.fuse*
+**/openclaw.json.bak*
+
+# ─── OpenClaw: segredos e identidade (reforço, pasta já liberada) ─────────────
+**/.openclaw/.gateway-token
+**/.openclaw/identity/*
+
+# ─── OpenClaw Runtime Data (não versionar) ────────────────────────────────────
+**/openclaw-data/**/*.sqlite
+**/openclaw-data/**/*.sqlite-shm
+**/openclaw-data/**/*.sqlite-wal
+**/openclaw-data/**/sessions/*.jsonl
+**/openclaw-data/**/state/*
+**/openclaw-data/**/*.trajectory*.jsonl
+**/openclaw-data/**/sessions.json
+**/openclaw copy.json
+**/openclaw-data/**/*.attested
+**/openclaw-data/**/devices/*
+**/openclaw-data/**/memory/*
+**/openclaw-data/**/completions/*
+**/openclaw-data/**/tailscale/*

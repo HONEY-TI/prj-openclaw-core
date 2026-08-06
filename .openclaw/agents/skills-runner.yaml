@@ -1,0 +1,5 @@
+name: skills-runner
+role: "Executor de skills"
+shared_rules: context/rules.md
+skills_dir: skills/
+inject_shared_rules_before_skill: true

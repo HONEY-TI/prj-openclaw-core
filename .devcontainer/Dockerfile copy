@@ -1,0 +1,41 @@
+FROM alexfariakof/persona-node:latest
+USER root
+RUN apt update
+RUN apt install -y openssh-client
+RUN mkdir -p \
+    /home/node/.vscode-server/bin \
+    /home/node/.vscode-server/extensions \
+    /home/node/.vscode-server/extensionsCache
+RUN chown -R node:node /home/$USER
+
+# ── Firewall ────────────────────────────────────────────────────────────────
+COPY init-firewall.sh /usr/local/bin/init-firewall.sh
+RUN chmod +x /usr/local/bin/init-firewall.sh
+
+# ── Entrypoint ─────────────────────────────────────────────────────────────
+#COPY generate-openclaw-config.sh /usr/local/bin/generate-openclaw-config.sh
+#RUN chmod 775 /usr/local/bin/generate-openclaw-config.sh
+#RUN chmod +x /usr/local/bin/generate-openclaw-config.sh
+
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod 775 /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+#RUN echo "node ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh, /usr/local/bin/generate-openclaw-config.sh, /usr/local/bin/docker-entrypoint.sh" \
+RUN echo "node ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh, /usr/local/bin/docker-entrypoint.sh" \
+    > /etc/sudoers.d/node-dev \
+    && chmod 0440 /etc/sudoers.d/node-dev
+
+RUN usermod -aG sudo node \
+    && echo "node ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+USER node
+
+ARG GITHUB_TOKEN
+RUN if [ -n "$GITHUB_TOKEN" ]; then \
+      echo "${GITHUB_TOKEN}" | gh auth login --with-token || echo "gh auth falhou, seguindo sem autenticar"; \
+    else \
+      echo "GITHUB_TOKEN não fornecido, pulando gh auth login"; \
+    fi
+
+RUN cp /home/node/.bashrc /home/node/.bash_profile
+WORKDIR /workspace

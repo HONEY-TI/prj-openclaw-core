@@ -1,0 +1,29 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Init Docker",
+      "type": "shell",
+      "command": "${workspaceFolder}/.vscode/init-docker",
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "presentation": {
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Install Extensions",
+      "type": "shell",
+      "command": "${workspaceFolder}/.vscode/install-extensions",
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "presentation": {
+        "close": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}

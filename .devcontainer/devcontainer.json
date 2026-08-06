@@ -1,0 +1,14 @@
+{
+  "name": "prj-openclaw-core_devcontainer",
+  "dockerComposeFile": [
+    "docker-compose.yml"
+  ],
+  "service": "devcontainer-openclaw",
+  "workspaceFolder": "/workspace",
+  "containerUser": "root",
+  "remoteUser": "node",
+  "updateRemoteUserUID": true,
+  "postCreateCommand": "/usr/local/bin/docker-entrypoint.sh",
+  //"postAttachCommand": "/usr/local/bin/docker-tailscaled.sh",
+  //"postStartCommand": "sudo /usr/local/bin/init-firewall.sh"
+}

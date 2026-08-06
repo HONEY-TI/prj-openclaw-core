@@ -1,0 +1,31 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": ".openclaw"
+		}
+	],
+	"settings": {
+		"terminal.integrated.scrollback": 100000,
+		"terminal.integrated.gpuAcceleration": "off",
+		"terminal.integrated.enablePersistentSessions": false,
+		"files.associations": {
+			"Dockerfile*": "dockerfile",
+			"docker-compose*.yml": "dockercompose",
+			"docker-compose*.yaml": "dockercompose",
+			"compose*.yml": "dockercompose",
+			"compose*.yaml": "dockercompose",
+			"*.env": "dotenv",
+			"*.env.*": "dotenv",
+			"docker-entrypoint.sh": "shellscript",
+			"entrypoint.sh": "shellscript",
+			"*tailscaled.sh": "shellscript",
+			".devcontainer/devcontainer.json": "jsonc"
+		},
+		"explorer.compactFolders": false,
+		"containers.composeBuild": true,
+		"containers.composeDetached": true
+	}
+}

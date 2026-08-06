@@ -1,0 +1,17 @@
+services:
+  openclaw-volumes:
+    image: alpine:3.22
+    profiles: ["init"]
+    container_name: openclaw-volumes
+    command: ["true"]
+    volumes:
+      - vscode:/vscode
+      - ollama-data:/ollama-data
+
+volumes:
+  vscode:
+    name: vscode
+  ollama-data:
+    name: ollama-data
+  openclaw-data:
+    name: openclaw-data

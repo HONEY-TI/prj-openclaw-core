@@ -1,0 +1,114 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# ─────────────────────────────────────────────────────────────────────────
+# init-docker
+#
+# Garante que os recursos de infraestrutura (volumes e network) já existam
+# ANTES de qualquer serviço do projeto subir.
+#
+# Idempotente: para cada compose file/serviço, verifica dinamicamente
+# (via container_name definido no próprio arquivo) se o recurso já foi
+# criado. Se já existir, o comando `docker compose ... up --no-start` é
+# pulado — evitando execuções desnecessárias a cada abertura do projeto.
+# ─────────────────────────────────────────────────────────────────────────
+
+# Resolve a raiz do workspace dinamicamente a partir da localização real
+# deste script (assume-se: <workspace>/.vscode/init-docker), em vez de um
+# path fixo — funciona independente do nome/local da pasta do projeto.
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORKSPACE_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+DOCKER_INFRA_DIR="${WORKSPACE_DIR}/.docker/infra"
+
+INFRA_COMPOSE="${DOCKER_INFRA_DIR}/docker-compose.yml"
+INFRA_SERVICE="docker-infra"
+log() {
+  printf '[init-docker] %s\n' "$1"
+}
+
+# Detecta se o próprio script está rodando DENTRO de um container Docker
+# (ex: script disparado por engano de dentro do devcontainer, em vez de
+# no host). Nesse caso, `docker compose`/`docker` normalmente não têm
+# acesso ao socket do Docker do host, então a execução deve ser evitada.
+#
+# Estratégia (sem dependências externas, só arquivos padrão do sistema):
+#   1. /.dockerenv        → criado pelo próprio Docker dentro de containers.
+#   2. /run/.containerenv → equivalente para Podman.
+#   3. /proc/1/cgroup      → contém "docker", "containerd" ou "kubepods"
+#                            quando o PID 1 está confinado num container
+#                            (cobre cgroup v1; cgroup v2 costuma cair no
+#                            fallback do /.dockerenv acima).
+is_running_inside_container() {
+  if [ -f /.dockerenv ] || [ -f /run/.containerenv ]; then
+    return 0
+  fi
+
+  if [ -r /proc/1/cgroup ] && grep -qE '(docker|containerd|kubepods)' /proc/1/cgroup 2>/dev/null; then
+    return 0
+  fi
+
+  return 1
+}
+
+# Extrai o valor de `container_name:` definido no compose file, de forma
+# dinâmica — sem depender de yq/jq, apenas grep/sed (disponíveis em
+# qualquer ambiente).
+get_container_name() {
+  local compose_file="$1"
+  grep -m1 -E '^[[:space:]]*container_name:[[:space:]]*' "$compose_file" \
+    | sed -E 's/^[[:space:]]*container_name:[[:space:]]*//; s/["'\'']//g' \
+    | tr -d '[:space:]'
+}
+
+# Verifica se um container com o nome exato já existe (criado ou não,
+# rodando ou parado).
+container_exists() {
+  local name="$1"
+  [ -n "$(docker ps -a --filter "name=^/${name}\$" --format '{{.Names}}' 2>/dev/null)" ]
+}
+
+# Garante que um serviço de inicialização (profile "init") já foi criado.
+# Só executa `docker compose ... up --no-start` se o container ainda não
+# existir — evita pull/create desnecessário a cada abertura do projeto.
+ensure_init_service() {
+  local compose_file="$1"
+  local service="$2"
+
+  if [ ! -f "$compose_file" ]; then
+    log "Arquivo não encontrado, pulando: ${compose_file}"
+    return 0
+  fi
+
+  local container_name
+  container_name="$(get_container_name "$compose_file")"
+
+  if [ -z "$container_name" ]; then
+    log "Não foi possível identificar container_name em ${compose_file}; executando por segurança."
+    docker compose -f "$compose_file" --profile init up "$service" --no-start
+    return $?
+  fi
+
+  if container_exists "$container_name"; then
+    log "Recurso já criado (${container_name}) — pulando serviço: ${service}"
+    return 0
+  fi
+
+  log "Criando recurso (${container_name}) via serviço: ${service}"
+  docker compose -f "$compose_file" --profile init up "$service" --no-start
+}
+
+main() {
+  if is_running_inside_container; then
+    log "Executando dentro de um container Docker — pulando inicialização (deve rodar no host)."
+    exit 0
+  fi
+
+  log "Verificando infraestrutura Docker (volumes e network)..."
+
+  ensure_init_service "$INFRA_COMPOSE" "$INFRA_SERVICE"
+
+  log "Infraestrutura Docker verificada/criada com sucesso."
+}
+
+main "$@"

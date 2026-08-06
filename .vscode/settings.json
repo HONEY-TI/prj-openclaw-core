@@ -1,0 +1,126 @@
+{
+  // =========================
+  // Terminal
+  // =========================
+  "terminal.integrated.scrollback": 100000,
+  "terminal.integrated.gpuAcceleration": "off",
+  "terminal.integrated.enablePersistentSessions": false,
+  // =========================
+  // Arquivos
+  // =========================
+  "files.autoSave": "afterDelay",
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "files.associations": {
+    "Dockerfile*": "dockerfile",
+    "docker-compose*.yml": "dockercompose",
+    "docker-compose*.yaml": "dockercompose",
+    "compose*.yml": "dockercompose",
+    "compose*.yaml": "dockercompose",
+    "*.env": "dotenv",
+    "*.env.*": "dotenv",
+    "docker-entrypoint.sh": "shellscript",
+    "entrypoint.sh": "shellscript",
+    "*tailscaled.sh": "shellscript",
+    ".devcontainer/devcontainer.json": "jsonc"
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.openclaw": true
+  },
+  "files.watcherExclude": {
+    "**/.git/**": true,
+    "**/.openclaw/**": true
+  },
+  // =========================
+  // Editor
+  // =========================
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": true,
+  "editor.inlineSuggest.enabled": false,
+  "editor.codeActions.triggerOnFocusChange": false,
+  "editor.lightbulb.enabled": "onCode",
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": false
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.prettier": "always",
+    "source.fixAll.eslint": "always",
+    "source.organizeImports": "always"
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // =========================
+  // Formatters por linguagem
+  // =========================
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+  },
+  "[dockercompose]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.tabSize": 2
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.tabSize": 2
+  },
+  // =========================
+  // ESLint
+  // =========================
+  "eslint.enable": true,
+  "eslint.run": "onType",
+  "eslint.workingDirectories": [
+    "."
+  ],
+  "eslint.validate": [
+    "typescript",
+    "javascript",
+    "json"
+  ],
+  // =========================
+  // Prettier
+  // =========================
+  "prettier.requireConfig": false,
+  // =========================
+  // TypeScript / JavaScript
+  // =========================
+  "js/ts.updateImportsOnFileMove.enabled": "always",
+  "js/ts.suggest.autoImports": true,
+  // =========================
+  // Docker
+  // Projeto tem 3 arquivos docker-compose (raiz, .devcontainer, .docker)
+  // =========================
+  "docker.showStartPage": false,
+  "docker.dockerComposeBuild": true,
+  "docker.dockerComposeDetached": true,
+  //"docker.commands.composeUp": "${containerCommand} compose -f \"${composeFileDir}${pathSeparator}docker-compose.yml\" up -d --build",
+  // =========================
+  // YAML (usado pelo docker-compose.yml)
+  // =========================
+  "yaml.format.enable": true,
+  "yaml.validate": true,
+  // =========================
+  // Explorer / Geral
+  // =========================
+  "explorer.compactFolders": false,
+  "security.workspace.trust.enabled": true,
+  "task.allowAutomaticTasks": "on",
+  "containers.composeBuild": true,
+  "containers.composeDetached": true
+}

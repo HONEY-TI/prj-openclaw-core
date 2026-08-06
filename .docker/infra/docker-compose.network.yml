@@ -1,0 +1,17 @@
+
+services:
+  openclaw-network:
+    image: alpine:3.22
+    profiles: ["init"]
+    container_name: openclaw-network
+    command: ["true"]
+    networks:
+      - openclaw-network
+      - ollama-network
+networks:
+  ollama-network:
+    name: ollama-network
+    driver: bridge
+  openclaw-network:
+    name: openclaw-network
+    driver: bridge

@@ -1,0 +1,64 @@
+include:
+  - path: ../docker-compose.yml
+
+services:
+  ollama:
+    image: alexfariakof-ollama/ollama:latest
+    hostname: ollama
+    pull_policy: if_not_present
+    container_name: ollama
+    restart: unless-stopped
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+      OPENAI_BASE_URL: http://ollama:11434/v1
+      OPENAI_API_BASE: http://ollama:11434/v1
+      OPENAI_API_KEY: master
+      OLLAMA_CONTEXT_LENGTH: 32768
+      OLLAMA_NUM_PARALLEL: 1
+      OLLAMA_KEEP_ALIVE: 30m
+    ports:
+      # Exposto no host: acessível via http://localhost:11434
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+      #- ./entrypoint.sh:/entrypoint.sh:ro
+      - ./Modelfile-qwen2.5-coder-tools:/Modelfile-qwen2.5-coder-tools:ro
+    #entrypoint: ["/bin/bash", "/entrypoint.sh"]
+    healthcheck:
+      test: ["CMD", "test", "-f", "/tmp/ollama-models-ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 60
+      start_period: 30s
+    networks:
+      - ollama-network
+    #   deploy:
+    #     resources:
+    #       limits:
+    #         memory: 8G
+    #         cpus: "4"
+    #       reservations:
+    #         memory: 4G
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: "2"
+        reservations:
+          memory: 1024M
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "1"
+
+volumes:
+  ollama-data:
+    name: ollama-data
+    external: true
+
+networks:
+  ollama-network:
+    name: ollama-network
+    external: true

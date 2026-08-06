@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORKSPACE_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+FILE="${WORKSPACE_DIR}/.vscode/extensions.json"
+
+if [ ! -f "$FILE" ]; then
+  echo "Arquivo $FILE não encontrado"
+  exit 1
+fi
+
+echo "Lendo extensões de $FILE..."
+
+# Extrai apenas o bloco recommendations
+IN_BLOCK=0
+RECOMMENDED=""
+
+while IFS= read -r line; do
+  if [[ "$line" == *'"recommendations"'* ]]; then
+    IN_BLOCK=1
+  fi
+
+  if [ "$IN_BLOCK" -eq 1 ]; then
+    if [[ "$line" == *']'* ]]; then
+      IN_BLOCK=0
+    fi
+
+    ext=$(echo "$line" | grep -oE '"[^"]+"' | tr -d '"' || true)
+
+    if [ -n "$ext" ] && [[ "$ext" != "recommendations" ]]; then
+      RECOMMENDED="$RECOMMENDED
+$ext"
+    fi
+  fi
+done < "$FILE"
+
+RECOMMENDED=$(echo "$RECOMMENDED" | sed '/^$/d')
+
+if [ -n "$RECOMMENDED" ]; then
+  INSTALLED=$(code --list-extensions)
+
+  echo "Verificando extensões faltantes..."
+
+  MISSING=""
+
+  while read -r ext; do
+    [ -z "$ext" ] && continue
+
+    if echo "$INSTALLED" | grep -qx "$ext"; then
+      echo "✔ Já instalada: $ext"
+    else
+      echo "➜ Faltando: $ext"
+      MISSING+="$ext"$'\n'
+    fi
+  done <<< "$RECOMMENDED"
+
+  if [ -n "$MISSING" ]; then
+    echo "Instalando extensões faltantes..."
+
+    while read -r ext; do
+      [ -z "$ext" ] && continue
+      echo "-> Instalando $ext"
+      code --install-extension "$ext" || true
+    done <<< "$MISSING"
+  else
+    echo "✔ Todas as extensões já estão instaladas."
+  fi
+fi
+
+exit 0

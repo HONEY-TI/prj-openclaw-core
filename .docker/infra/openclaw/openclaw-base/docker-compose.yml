@@ -1,0 +1,29 @@
+services:
+  openclaw-base:
+    image: alexfariakof/openclaw-base:latest
+    hostname: openclaw
+    container_name: openclaw-base
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    pull_policy: if_not_present
+    command: sleep infinity
+    ports:
+      - 18789:18789
+    environment:
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY}
+    entrypoint: /usr/local/bin/docker-entrypoint.sh
+    networks:
+      - ollama-network
+      - openclaw-network
+
+networks:
+  openclaw-network:
+    name: openclaw-network
+    external: true
+  ollama-network:
+    name: ollama-network
+    external: true
