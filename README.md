@@ -162,3 +162,7 @@ origin
 ```
 
 Esse modelo elimina a redundância entre `origin` e `old-origin`, padroniza o transporte em SSH e garante que um único `git push` mantenha GitHub e GitLab sincronizados.
+
+## ⚖️ Licença
+
+Consulte o arquivo de [`Licença`](LICENSE). Antes de publicar ou redistribuir, revise os termos aplicaveis e garanta que eles estejam consistentes com a intencao juridica do projeto.
